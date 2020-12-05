@@ -9,7 +9,7 @@
 
 (def db (pg/spec))
 
-(defn insert-signup [email password]
+(defn insert-member [email password]
   (jdbc/insert! db :member [:email :password] [email password]))
 
 (defn select-member [email]
