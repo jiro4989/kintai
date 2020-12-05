@@ -16,4 +16,4 @@
   (jdbc/query db ["SELECT * FROM member WHERE email = ?" email]))
 
 ; (insert-signup "sushi" "morimori")
-(select-member "unko")
+; (select-member "unko")
