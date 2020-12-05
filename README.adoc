@@ -3,12 +3,13 @@
 
 お遊び勤怠管理システム。
 暇になったら進めたい。
+バックエンドにしか力を入れるつもりはない。
 
 == 開発環境
 
 . フロントエンド
 .. React.js + TypeScript
-. サーバサイド
+. バックエンド
 .. Clojure + Ring + Compojure
 .. PostgreSQL
 .. Docker
