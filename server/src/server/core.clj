@@ -2,10 +2,12 @@
   (:use ring.adapter.jetty)
   (:require [compojure.core :refer [defroutes context GET]]
             [compojure.route :as route]
-            [server.handler :refer [handler]])
+            [server.handler :refer [handler]]
+            [ring.middleware.params :refer [wrap-params]])
   (:gen-class))
 
 (defn -main
   ""
   [& args]
-  (run-jetty handler {:port 5000}))
+  (run-jetty (-> handler
+                 wrap-params) {:port 5000}))
