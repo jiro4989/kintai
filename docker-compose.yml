@@ -13,12 +13,12 @@ services:
   db:
     image: postgres:13-alpine
     ports:
-      - '5432:5432'
+      - '15432:5432'
     volumes:
       - "./volumes/db:/var/lib/postgresql/data"
       - "./volumes/initdb.d:/docker-entrypoint-initdb.d"
     environment:
       POSTGRES_DB: kintai
-      POSTGRES_USER: root
+      POSTGRES_USER: kintai
       POSTGRES_PASSWORD: password
       POSTGRES_HOST_AUTH_METHOD: trust
