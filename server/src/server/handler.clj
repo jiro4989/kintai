@@ -9,11 +9,6 @@
      :headers {"Content-Type" "application/json"}
      :body "{\"signin ok\"}"}))
 
-; (defn api-signup [req]
-;   {:status 200
-;    :headers {"Content-Type" "application/json"}
-;    :body "{\"signup ok\"}"})
-
 (defn api-signin [req]
   {:status 200
    :headers {"Content-Type" "application/json"}
