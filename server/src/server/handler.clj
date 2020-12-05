@@ -22,12 +22,15 @@
   (if (member-exists? (:email req))
     resp-404
     (do
+      ; (println req)
+      (println "session is " (:session req))
       (db/insert-member (:email req) (:password req))
       resp-ok)))
 
 (defn api-signin [req]
   (if (member-exists? (:email req))
-    resp-ok
+    (-> resp-ok
+        (assoc-in [:session :email] (:email req)))
     resp-404))
 
 (defroutes handler
