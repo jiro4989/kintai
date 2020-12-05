@@ -10,4 +10,10 @@
 (def db (pg/spec))
 
 (defn insert-signup [email password]
-  (jdbc/insert! db :user [{:email email :password password}]))
+  (jdbc/insert! db :member [:email :password] [email password]))
+
+(defn select-member [email]
+  (jdbc/query db ["SELECT * FROM member WHERE email = ?" email]))
+
+; (insert-signup "sushi" "morimori")
+(select-member "unko")
