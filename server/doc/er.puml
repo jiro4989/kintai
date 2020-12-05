@@ -1,0 +1,47 @@
+@startuml
+
+entity user {
+  * id [PK]
+  * email
+  * password
+  * created
+  * updated
+}
+
+entity role {
+  * id
+  * name
+}
+
+entity permission {
+  * id
+  * name
+}
+
+entity role_permission_link {
+  * role_id
+  * permission_id
+}
+
+entity user_role_link {
+  * id [PK]
+  * user_id
+  * role_id
+}
+
+entity working_log {
+  * id
+  * user_id
+  * start_time
+  * end_time
+  * created
+  * updated
+}
+
+user ||--o{ working_log
+user ||--|{ user_role_link
+user_role_link ||--|| role
+role ||--|{ role_permission_link
+role_permission_link ||--|{ permission
+
+@enduml
