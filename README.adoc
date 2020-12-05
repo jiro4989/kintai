@@ -1,0 +1,29 @@
+= kintai
+:toc: left
+
+お遊び勤怠管理システム。
+暇になったら進めたい。
+
+== 開発環境
+
+. フロントエンド
+.. React.js + TypeScript
+. サーバサイド
+.. Clojure + Ring + Compojure
+.. PostgreSQL
+.. Docker
+
+== やりたいこと
+
+. SPA
+. REST API
+. パスワード認証
+. パスワードハッシュ化
+. セッション管理
+. Cookie
+. Heroku
+
+== やらないこと
+
+. UIデザイン
+.. 興味ないから
