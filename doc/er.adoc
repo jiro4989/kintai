@@ -8,7 +8,8 @@
 ... read-self
 ... write-self
 .. 管理者
-... manage-everyone
+... read-everyone
+... write-everyone
 . ユーザは勤怠を記録する。勤怠は0以上
 . 従業員は自分の勤怠のみ操作できる
 . 管理者は他者の勤怠を操作できる
