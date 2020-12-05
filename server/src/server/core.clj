@@ -1,11 +1,9 @@
 (ns server.core
   (:use ring.adapter.jetty)
+  (:require [compojure.core :refer [defroutes context GET]]
+            [compojure.route :as route]
+            [server.handler :refer [handler]])
   (:gen-class))
-
-(defn handler [request]
-  {:status 200
-   :headers {"Content-Type" "text/plain"}
-   :body "Hello World"})
 
 (defn -main
   ""
