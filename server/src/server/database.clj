@@ -15,5 +15,8 @@
 (defn select-member [email]
   (jdbc/query db ["SELECT * FROM member WHERE email = ?" email]))
 
+(defn select-members []
+  (jdbc/query db ["SELECT * FROM member"]))
+
 ; (insert-signup "sushi" "morimori")
 ; (select-member "unko")
