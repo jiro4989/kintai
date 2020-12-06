@@ -18,6 +18,9 @@ function Index() {
         <li>
           <a href="/signin" >signin</a>
         </li>
+        <li>
+          <a href="/members" >members</a>
+        </li>
       </ul>
     </div>
   );
