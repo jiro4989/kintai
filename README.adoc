@@ -30,3 +30,13 @@
 
 . UIデザイン
 .. 興味ないから
+
+== 起動方法
+
+. docker-compose up
+. front
+.. npm start
+. server
+.. lein run
+
+あとは http://localhost にアクセスするだけ。
