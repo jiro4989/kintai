@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Signup from './Signup';
 import Signin from './Signin';
+import Members from './Members';
 
 function Index() {
   return (
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route path='/' component={Index} />
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
+          <Route path='/members' component={Members} />
         </div>
       </Router>
     </div>
