@@ -1,14 +1,13 @@
 version: '3.7'
 
 services:
-  # nginx:
-  #   image: nginx:1.17
-  #   volumes:
-  #     - "./nginx/conf.d:/etc/nginx/conf.d:ro"
-  #     - "./websh_front/public:/var/www:ro"
-  #   ports:
-  #     - "80:80"
-  #   network_mode: "host"
+  nginx:
+    image: nginx:1.17
+    volumes:
+      - "./volumes/nginx/conf.d:/etc/nginx/conf.d:ro"
+    ports:
+      - "80:80"
+    network_mode: "host"
 
   db:
     image: postgres:13-alpine
