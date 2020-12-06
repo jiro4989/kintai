@@ -27,6 +27,9 @@ function Members() {
       <td>
         {m.email}
       </td>
+      <td>
+        {m.created_at}
+      </td>
     </tr>
   })
 
@@ -37,10 +40,13 @@ function Members() {
         <thead>
           <tr>
             <td>
-              id
+              ID
             </td>
             <td>
-              email
+              メールアドレス
+            </td>
+            <td>
+              登録日
             </td>
           </tr>
         </thead>
