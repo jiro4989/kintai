@@ -4,16 +4,30 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import App from './App';
 import Signup from './Signup';
 import Signin from './Signin';
+
+function Index() {
+  return (
+    <div className="Index">
+      <ul>
+        <li>
+          <a href="/signup" >signup</a>
+        </li>
+        <li>
+          <a href="/signin" >signin</a>
+        </li>
+      </ul>
+    </div>
+  );
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <div className="Index">
       <Router>
         <div>
-          <Route path='/' component={App} />
+          <Route path='/' component={Index} />
           <Route path='/signup' component={Signup} />
           <Route path='/signin' component={Signin} />
         </div>
