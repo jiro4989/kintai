@@ -9,9 +9,14 @@
 
 (def db (pg/spec))
 
-(defn insert-member [email password]
-  (jdbc/insert! db :member [:email :password] [email password]))
+(defn uuid []
+  (str (java.util.UUID/randomUUID)))
 
+(defn now []
+  (java.sql.Timestamp/valueOf (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm:ss") (java.util.Date.))))
+
+(defn insert-member [email password]
+  (jdbc/insert! db :member [:id :email :password :created_at :updated_at] [(uuid) email password (now) (now)]))
 (defn select-member [email]
   (jdbc/query db ["SELECT * FROM member WHERE email = ?" email]))
 
