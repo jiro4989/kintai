@@ -5,6 +5,7 @@
             [ring.util.response :as res]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.session :refer [wrap-session]]
+            [ring.middleware.json :refer [wrap-json-response]]
             [buddy.auth.accessrules :as baa]
             [buddy.auth.backends :as bab]
             [buddy.auth.middleware :as bam]))
@@ -13,16 +14,18 @@
   (baa/success))
 
 (defn member-access [{:keys [id]}]
-  (if id
-    (baa/success)
-    (baa/error)))
+  (baa/success))
+
+; 後で実装
+; (defn member-access [{:keys [id]}]
+;   (if id
+;     (baa/success)
+;     (baa/error)))
 
 (def head {"Content-Type" "application/json"})
 
 (def resp-ok
-  {:status 200
-   :headers head
-   :body "{\"message\":\"ok\"}"})
+  (res/response {:message "ok"}))
 
 (defn member-exists? [email]
   (= 1 (count (db/select-member email))))
@@ -43,6 +46,9 @@
                                    assoc :recreate true)))
     (res/bad-request "ng")))
 
+(defn api-members [req]
+  (res/response {:members (db/select-members)}))
+
 (defn session-authfn
   [id]
   id)
@@ -62,6 +68,7 @@
   (context "/api/v1" _
            (POST "/signup" req api-signup)
            (POST "/signin" req api-signin)
+           (GET "/members" req api-members)
            )
   (route/not-found "{\"message\":\"api not found\"}"))
 
@@ -69,5 +76,6 @@
   (-> base-handler
       wrap-params
       wrap-session
+      wrap-json-response
       (baa/wrap-access-rules {:rules rules})
       (bam/wrap-authentication (bab/session {:authfn session-authfn}))))
