@@ -34,7 +34,7 @@ function Signup() {
               email:
             </th>
             <td>
-              <input type="text" value={email} onChange={(e) => setEmail(e.targetValue)} />
+              <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             </td>
           </tr>
           <tr>
@@ -42,7 +42,7 @@ function Signup() {
               password:
             </th>
             <td>
-              <input type="password" value={password} onChange={(e) => setPassword(e.targetValue)} />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </td>
           </tr>
         </tbody>
