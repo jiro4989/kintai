@@ -5,7 +5,6 @@
             [ring.util.response :as res]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.session :refer [wrap-session]]
-            [ring.middleware.cors :refer [wrap-cors]]
             [buddy.auth.accessrules :as baa]
             [buddy.auth.backends :as bab]
             [buddy.auth.middleware :as bam]))
@@ -70,7 +69,5 @@
   (-> base-handler
       wrap-params
       wrap-session
-      (wrap-cors :access-control-allow-origin [#"https?://localhost.*"]
-                 :access-control-allow-methods [:get :put :post :delete])
       (baa/wrap-access-rules {:rules rules})
       (bam/wrap-authentication (bab/session {:authfn session-authfn}))))
