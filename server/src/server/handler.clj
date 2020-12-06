@@ -1,7 +1,19 @@
 (ns server.handler
   (:require [compojure.core :refer [defroutes context GET POST]]
             [compojure.route :as route]
-            [server.database :as db]))
+            [server.database :as db]
+            [ring.util.response :as res]
+            [buddy.auth.accessrules :as baa]
+            [buddy.auth.backends :as bab]
+            [buddy.auth.middleware :as bam]))
+
+(defn any-access [_]
+  (baa/success))
+
+(defn member-access [{:keys [id]}]
+  (if id
+    (baa/success)
+    (baa/error)))
 
 (def head {"Content-Type" "application/json"})
 
@@ -10,17 +22,12 @@
    :headers head
    :body "{\"message\":\"ok\"}"})
 
-(def resp-404
-  {:status 404
-   :headers head
-   :body "{\"message\":\"ng\"}"})
-
 (defn member-exists? [email]
   (= 1 (count (db/select-member email))))
 
 (defn api-signup [req]
   (if (member-exists? (:email req))
-    resp-404
+    (res/bad-request "ng")
     (do
       ; (println req)
       (println "session is " (:session req))
@@ -28,10 +35,11 @@
       resp-ok)))
 
 (defn api-signin [req]
-  (if (member-exists? (:email req))
+  (if-let [member (db/select-memger (:email req))]
     (-> resp-ok
-        (assoc-in [:session :email] (:email req)))
-    resp-404))
+        (assoc :session (vary-meta (assoc session :id (:email member))
+                                   assoc :recreate true)))
+    (res/bad-request "ng")))
 
 (defroutes handler
   (context "/api/v1" _

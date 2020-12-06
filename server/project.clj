@@ -7,7 +7,8 @@
                  [ring "1.8.2"]
                  [compojure "1.6.2"]
                  [org.clojure/java.jdbc "0.7.11"]
-                 [clj-postgresql "0.7.0"]]
+                 [clj-postgresql "0.7.0"]
+                 [buddy/buddy-auth "2.2.0"]]
   :main ^:skip-aot server.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
