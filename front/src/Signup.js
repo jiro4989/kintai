@@ -11,7 +11,7 @@ function Signup() {
     const body = Object.keys(obj).map((key)=>key+"="+encodeURIComponent(obj[key])).join("&");
 
     fetch("http://localhost:5000/api/v1/signup", {
-      // method: "POST",
+      method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "mode": "cors",
