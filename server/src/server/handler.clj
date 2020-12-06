@@ -3,6 +3,8 @@
             [compojure.route :as route]
             [server.database :as db]
             [ring.util.response :as res]
+            [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.session :refer [wrap-session]]
             [buddy.auth.accessrules :as baa]
             [buddy.auth.backends :as bab]
             [buddy.auth.middleware :as bam]))
@@ -35,15 +37,37 @@
       resp-ok)))
 
 (defn api-signin [req]
-  (if-let [member (db/select-memger (:email req))]
+  (if-let [member (db/select-member (:email req))]
     (-> resp-ok
-        (assoc :session (vary-meta (assoc session :id (:email member))
+        (assoc :session (vary-meta (assoc (:session req) :id (:email member))
                                    assoc :recreate true)))
     (res/bad-request "ng")))
 
-(defroutes handler
+(defn session-authfn
+  [id]
+  id)
+
+(def rules
+  [
+   ; サインアップ・サインインは認証不要
+   {:uris ["/api/v1/signup" "/api/v1/signin"]
+    :handler any-access}
+   ; それ以外のURLには認証必須
+   {:pattern #"/api/v1/.*"
+    :handler member-access
+    :on-error (fn [_ _] (res/bad-request "ng"))}
+   ])
+
+(defroutes base-handler
   (context "/api/v1" _
            (POST "/signup" req api-signup)
            (POST "/signin" req api-signin)
            )
   (route/not-found "{\"message\":\"api not found\"}"))
+
+(def handler
+  (-> base-handler
+      wrap-params
+      wrap-session
+      (baa/wrap-access-rules {:rules rules})
+      (bam/wrap-authentication (bab/session {:authfn session-authfn}))))
