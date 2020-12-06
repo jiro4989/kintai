@@ -10,7 +10,7 @@ function Signup() {
     const obj = {email: email, password: password}
     const body = Object.keys(obj).map((key)=>key+"="+encodeURIComponent(obj[key])).join("&");
 
-    fetch("http://localhost:5000/api/v1/signup", {
+    fetch("http://localhost/api/v1/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -19,9 +19,10 @@ function Signup() {
         "credentials": 'include'
       },
       body: body,
-    }).then((resp) => resp.json())
-    .then((resp) => { setResult(resp) })
-    .catch(console.error);
+    })
+    .then((resp) => resp.json())
+    .then((resp) => { setResult(resp.message) })
+    .catch((resp) => { console.error(resp) });
   }
 
   return (
