@@ -27,12 +27,15 @@
 (def resp-ok
   (res/response {:message "ok"}))
 
+(def resp-bad
+  (res/bad-request {:message "bad request"}))
+
 (defn member-exists? [email]
   (= 1 (count (db/select-member email))))
 
 (defn api-signup [req]
   (if (member-exists? (:email req))
-    (res/bad-request "ng")
+    resp-bad
     (do
       ; (println req)
       (println "session is " (:session req))
@@ -44,7 +47,7 @@
     (-> resp-ok
         (assoc :session (vary-meta (assoc (:session req) :id (:email member))
                                    assoc :recreate true)))
-    (res/bad-request "ng")))
+    resp-bad))
 
 (defn api-members [req]
   (res/response {:members (db/select-members)}))
@@ -61,7 +64,7 @@
    ; それ以外のURLには認証必須
    {:pattern #"/api/v1/.*"
     :handler member-access
-    :on-error (fn [_ _] (res/bad-request "ng"))}
+    :on-error (fn [_ _] resp-bad)}
    ])
 
 (defroutes base-handler
@@ -70,7 +73,7 @@
            (POST "/signin" req api-signin)
            (GET "/members" req api-members)
            )
-  (route/not-found "{\"message\":\"api not found\"}"))
+  (route/not-found {:message "api not found"}))
 
 (def handler
   (-> base-handler
